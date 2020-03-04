@@ -5,7 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
-
+git push
 # Distribution / packaging
 .Python
 build/
@@ -47,10 +47,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
-<<<<<<< HEAD
-=======
 *.py,cover
->>>>>>> 2fba400bf8c4e0b8dfd8315afb82be385aeaa973
 .hypothesis/
 .pytest_cache/
 
@@ -58,8 +55,6 @@ coverage.xml
 *.mo
 *.pot
 
-<<<<<<< HEAD
-=======
 # Django stuff:
 *.log
 local_settings.py
@@ -70,7 +65,6 @@ db.sqlite3-journal
 instance/
 .webassets-cache
 
->>>>>>> 2fba400bf8c4e0b8dfd8315afb82be385aeaa973
 # Scrapy stuff:
 .scrapy
 
@@ -80,8 +74,6 @@ docs/_build/
 # PyBuilder
 target/
 
-<<<<<<< HEAD
-=======
 # Jupyter Notebook
 .ipynb_checkpoints
 
@@ -89,7 +81,6 @@ target/
 profile_default/
 ipython_config.py
 
->>>>>>> 2fba400bf8c4e0b8dfd8315afb82be385aeaa973
 # pyenv
 .python-version
 
@@ -100,23 +91,16 @@ ipython_config.py
 #   install all needed dependencies.
 #Pipfile.lock
 
-<<<<<<< HEAD
-# celery beat schedule file
-celerybeat-schedule
-=======
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
 
 # Celery stuff
 celerybeat-schedule
 celerybeat.pid
->>>>>>> 2fba400bf8c4e0b8dfd8315afb82be385aeaa973
 
 # SageMath parsed files
 *.sage.py
 
-<<<<<<< HEAD
-=======
 # Environments
 .env
 .venv
@@ -126,7 +110,6 @@ ENV/
 env.bak/
 venv.bak/
 
->>>>>>> 2fba400bf8c4e0b8dfd8315afb82be385aeaa973
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -134,14 +117,6 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-<<<<<<< HEAD
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
-
-=======
->>>>>>> 2fba400bf8c4e0b8dfd8315afb82be385aeaa973
 # mkdocs documentation
 /site
 
@@ -152,8 +127,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-<<<<<<< HEAD
-
-# End of https://www.gitignore.io/api/python
-=======
->>>>>>> 2fba400bf8c4e0b8dfd8315afb82be385aeaa973
