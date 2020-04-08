@@ -21,3 +21,7 @@
 ## Etap 3 - Pobranie wszystkich opinii o pojedynczym produkcie
 - sposób przechodzenia po poszczegolnych stronach z opiniami
 - Eksport opinii do pliku .js
+## Etap 4 - analiza pobranych danych
+- zapisanie pobranych danych do obiektu dataframe
+- wykonanie prostych obliczen na danych
+- wykonanie prostych wykresow
