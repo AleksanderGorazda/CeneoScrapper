@@ -30,6 +30,7 @@ fig, ax = plt.subplots()
 recommendation.plot.pie(label="", autopct="%1.1f%%", colors=["green", "red"])
 ax.set_title("Rekomendacje")
 plt.savefig("figures/"+product_id+"_pie.png")
+plt.close()
 
 average_score = opinions["stars"].mean()
 pros = opinions["pros"].count()
