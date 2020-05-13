@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Length, Regexp
 
-class ProductFrom(FlaskForm):
+class ProductForm(FlaskForm):
     product_code = StringField("Podaj kod produktu do pobrania opinii", 
     validators=[
         DataRequired(message='Musisz podac kod produktu'),
