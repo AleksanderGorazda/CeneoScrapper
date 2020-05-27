@@ -1,5 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
+from enum import Enum, auto
+from app.utils import extract_feature, remove_whitespaces
+
 
 class Product():
     def __init__(self, product_id=None, name=None, opinions=[]):
@@ -19,7 +22,9 @@ class Product():
             url_prefix = "https://www.ceneo.pl"
             url_postfix = "#tab=reviews"
             url = url_prefix+"/"+self.product_id+url_postfix
+            opinions_list = []
             while url:
+                print(url)
                 #pobranie kodu HTML strony z adresu URL
                 page_response = requests.get(url)
                 page_tree = BeautifulSoup(page_response.text, 'html.parser')
@@ -27,42 +32,41 @@ class Product():
                 #wybranie z kodu strony fragmentów odpowiadających poszczególnym opiniom
                 opinions = page_tree.select("li.js_product-review")
                 
-                #ekstrakcja składowyh dla pojedynczej opinii z listy
+                #ekstrakcja składowych dla pojedynczej opinii z listy
                 for opinion in opinions: 
-
-                    opinion_id = opinion["data-entry-id"]
-                    features["purchased"] = True if features["purchased"] == "Opinia potwierdzona zakupem" else False
-                    features["useful"] = int(features["useful"])
-                    features["useless"] = int(features["useless"])
-                    features["content"]=remove_whitespaces(features["content"])
-                    features["pros"]=remove_whitespaces(features["pros"])
-                    features["cons"]=remove_whitespaces(features["cons"])
-
-                    opinions_list.append(features)
-
+                    op = Opinion()
+                    op.extract_opinion(opinion)
+                    opinions_list.append(op)
                 try:
                     url = url_prefix+page_tree.select("a.pagination__next").pop()["href"]
                 except IndexError:
                     url = None
-            
-class Selectors(Enum):
-    AUTHOR = ['div.reviewer-name-line']
+                print(len(opinions_list))
+            self.opinions = opinions_list
+            print(len(opinions_list))
+    def __str__(self):
+        return f'product id: {self.product_id}\n nazwa: {self.name}\n\n'+'\n'.join(str(opinion) for opinion in self.opinions)
+    def __repr__(self):
+        pass
+    def save_product(self):
+        pass
+
 
 class Opinion:
     #lista składowych opini wraz z selektorami i atrybutami
     selectors = {
-    "author":['div.reviewer-name-line'],
-    "recommendation":['div.product-review-summary > em'],
-    "stars":['span.review-score-count'],
-    "content": ['p.product-review-body'],
-    "pros": ['div.pros-cell > ul'],
-    "cons":['div.cons-cell > ul'],
-    "useful":['button.vote-yes',"data-total-vote"],
-    "useless":['button.vote-no',"data-total-vote"],
-    "purchased":['div.product-review-pz'],
-    "purchase_date":['span.review-time > time:nth-child(2)',"datetime"],
-    "review_date":['span.review-time > time:nth-child(1)',"datetime"]
-}
+        "author": ['span.user-post__author-name'],
+        "recommendation":['span.user-post__author-recomendation > em'],
+        "stars":['span.user-post__score-count'],
+        "content": ['div.user-post__text'],
+        "pros": ['div.review-feature__col:has(div.review-feature__title--positives)'],
+        "cons":['div.review-feature__col:has(div.review-feature__title--negatives)'], 
+        "useful":['button.vote-yes', "data-total-vote"],
+        "useless":['button.vote-no', "data-total-vote"],
+        "purchased":['div.review-pz'],
+        "purchase_date":['span.user-post__published > time:nth-of-type(1)',"datetime"],
+        "review_date":['span.user-post__published > time:nth-of-type(2)',"datetime"]
+    }
     def __init__(self, opinion_id=None, author=None, recommendation=None, stars=None, content=None, pros=None, cons=None, useful=None,
                 useless=None, purchased=None, purchase_date=None, review_date=None):
         self.opinion_id = opinion_id
@@ -86,9 +90,20 @@ class Opinion:
     def __repr__(self):
         pass
 
-    def extract_opinion(self):
-        features = {key:extract_feature(opinion, *args)
-            for key, args in selectors.items()}
+    def extract_opinion(self, opinion):
+        for key, args in self.selectors.items():
+            setattr(self, key, extract_feature(opinion, *args))
         self.opinion_id = int(opinion["data-entry-id"])
+        pass
+    def transform_opinion(self):
+        features["purchased"] = True if features["purchased"] == "Opinia potwierdzona zakupem" else False
+        features["useful"] = int(features["useful"])
+        features["useless"] = int(features["useless"])
+        features["content"] = remove_whitespaces(features["content"])
+        features["pros"] = remove_whitespaces(features["pros"])
+        features["cons"] = remove_whitespaces(features["cons"])
+        pass
+
+        
 product = Product("39562616")
 product.extract_product()
