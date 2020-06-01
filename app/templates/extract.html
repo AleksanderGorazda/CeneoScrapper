@@ -12,7 +12,7 @@
     {% endif %}
     <form method="POST" action="/extract">
         {{ form.hidden_tag() }}
-        {{ form.product code.label }} {{ form.product code(size=20)  }}
+        {{ form.product_code.label }} {{ form.product_code(size=20)  }}
         {{ form.submit(class="btn btn-info") }}
     </form>
 {% endblock %}

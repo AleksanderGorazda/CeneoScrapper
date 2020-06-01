@@ -3,7 +3,6 @@ from flask import Flask
 
 #utworzenie instancji (obiektu) klasy flask reprezentującej aplikację
 app = Flask(__name__)
-
 from app import routes
 
 if __name__=="__main__":
